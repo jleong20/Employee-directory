@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import EmployeeList from "./components/empList";
 import EmployeeJSON from "./empList.json";
-
+import EmpContext from "./utils/EmpContext";
 class App extends Component{
   render(){
     const styles={
@@ -9,7 +9,28 @@ class App extends Component{
         background: "#BEBEBE",
       }
     }
+    //Employee List state
+    const [employees, setEmps] = useState([]);
+    const [emp, setEmp] = useState({});
+    const [empIndex, setEmpIndex] = useState();
+    //UseEffect() to render full list of employees
+
+    useEffect(() => {
+      loadUEmps();
+    }, []);
+    function loadEmps() {
+      {EmployeeJSON.map(Employee =>(
+        <EmployeeList id={Employee.id} name={Employee.name} email={Employee.email} phone={Employee.phone}/>
+        ))}
+    }
+    //function to handle search input for employee
+    handleSearch =()=>{
+
+    }
+    
     return(
+      //send employee context
+      <EmpContext.Provider value={{employees, emp}}>
       <div class="container">
         <h1>Employee Directory</h1>
         <input type="text" placeholder="Search.."></input>
@@ -30,6 +51,7 @@ class App extends Component{
           
         </div> 
       </div>
+      </EmpContext.Provider>
     )
   }
 }
